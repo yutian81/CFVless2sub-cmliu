@@ -1,5 +1,5 @@
 # 优选订阅生成器 WorkerVless2sub
-
+![sub](./sub.png)
 ### 这个是一个通过 Cloudflare Workers 搭建，自动生成优选线路 VLESS / Trojan 节点订阅内容生成器 [[实现原理]](https://www.youtube.com/watch?v=p-KhFJAC4WQ&t=70s)
 
 Telegram交流群：[@CMLiussss](https://t.me/CMLiussss)，**感谢[Alice Networks](https://alice.ws/aff.php?aff=15)提供的云服务器维持[CM订阅转换服务](https://sub.fxxk.dedyn.io/)！**
@@ -209,6 +209,7 @@ Telegram交流群：[@CMLiussss](https://t.me/CMLiussss)，**感谢[Alice Networ
 | SUBAPI | `subapi.fxxk.dedyn.io` | clash、singbox等 订阅转换后端 | 
 | SUBCONFIG | [https://raw.github.../ACL4SSR_Online_Full_MultiMode.ini](https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online_Full_MultiMode.ini) | clash、singbox等 订阅转换配置文件 | 
 | SUBNAME | `WorkerVless2sub` | 订阅生成器名称 | 
+| BY | `提供维护: <a href='https://t.me/CMLiussss'>CMLiussss</a>` | 你自己的维护信息 | 
 | SOCKS5DATA | [https://raw.github.../socks5Data](https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/socks5Data) | Socks5代理池 | 
 | PS | `【请勿测速】` | 节点名备注消息 | 
 | PROXYIP | `proxyip.fxxk.dedyn.io` | 默认分配的ProxyIP, 多ProxyIP将随机分配(支持多元素, 元素之间使用`,`或`换行`作间隔) | 
