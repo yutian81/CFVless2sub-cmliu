@@ -1,5 +1,7 @@
 // 格式化 addcsv 文件的节点名称为 “国家 | 城市 | 节点备注”
-// 新增变量
+// 新增变量 RENAME, 默认为 “yutian81优选反代”
+// 新增变量 COUNTRYNUM, 默认为 “4”，对应CSV文件中的“国家”
+// 新增变量 CITYNUM, 默认为 “5”，对应CSV文件中的“城市”
 
 let 快速订阅访问入口 = ['auto'];
 let addresses = [];
