@@ -1,4 +1,6 @@
-// 格式化 addcsv 文件的节点名称为 “国家 | 城市”
+// 格式化 addcsv 文件的节点名称为 “国家 | 城市 | 节点备注”
+// 新增变量
+
 let 快速订阅访问入口 = ['auto'];
 let addresses = [];
 let addressesapi = [];
@@ -155,7 +157,6 @@ async function 整理测速结果(tls) {
 
 	// 并行处理CSV
 	const csvPromises = addressescsv.map(async (csvUrl) => {
-	rename = env.RENAME || rename;
 		try {
 			const response = await fetch(csvUrl);
 
@@ -516,8 +517,9 @@ export default {
 		if (env.ADDNOTLSAPI) addressesnotlsapi = await 整理(env.ADDNOTLSAPI);
 		if (env.ADDCSV) addressescsv = await 整理(env.ADDCSV);
 		DLS = Number(env.DLS) || DLS;
-    countrynum = Number(env.COUNTRYNUM) || countrynum;
-    citynum = Number(env.CITYNUM) || citynum;
+		rename = env.RENAME || rename;
+    		countrynum = Number(env.COUNTRYNUM) || countrynum;
+    		citynum = Number(env.CITYNUM) || citynum;
 		// remarkIndex = Number(env.CSVREMARK) || remarkIndex;
 
 		if (socks5DataURL) {
