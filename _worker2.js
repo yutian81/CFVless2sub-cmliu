@@ -155,7 +155,7 @@ async function 整理测速结果(tls) {
 
 	// 并行处理CSV
 	const csvPromises = addressescsv.map(async (csvUrl) => {
-	const rename = env.RENAME || rename;
+	rename = env.RENAME || rename;
 		try {
 			const response = await fetch(csvUrl);
 
