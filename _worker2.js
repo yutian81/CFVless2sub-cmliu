@@ -6,6 +6,7 @@ let addressesnotls = [];
 let addressesnotlsapi = [];
 let addressescsv = [];
 let DLS = 8;
+let rename = "yutian81优选反代"
 let countrynum = 4;
 let citynum = 5;
 // let remarkIndex = 1;//CSV备注所在列偏移量
@@ -44,6 +45,7 @@ let 网络备案 = `<a href='https://t.me/CMLiussss'>萌ICP备-20240707号</a>`;
 let 额外ID = '0';
 let 加密方式 = 'auto';
 let 网站图标, 网站头像, 网站背景;
+
 async function 整理优选列表(api) {
 	if (!api || api.length === 0) return [];
 
@@ -153,6 +155,7 @@ async function 整理测速结果(tls) {
 
 	// 并行处理CSV
 	const csvPromises = addressescsv.map(async (csvUrl) => {
+	const rename = env.RENAME || rename;
 		try {
 			const response = await fetch(csvUrl);
 
@@ -180,11 +183,11 @@ async function 整理测速结果(tls) {
 				.map(row => {
 					const ipAddress = row[0];
 					const port = row[1];
-          // const dataCenter = row[tlsIndex + remarkIndex]
+					// const dataCenter = row[tlsIndex + remarkIndex]
 					const countryIndex = row[tlsIndex + countrynum];
-          const cityIndex = row[tlsIndex + citynum];
+					const cityIndex = row[tlsIndex + citynum];
 					// const formattedAddress = `${ipAddress}:${port}#${dataCenter}`;
-          const formattedAddress = `${ipAddress}:${port}#${countryIndex} | ${cityIndex}`;
+					const formattedAddress = `${ipAddress}:${port}#${countryIndex} | ${cityIndex} | ${rename}`;
 
 					// 处理代理IP池
 					if (csvUrl.includes('proxyip=true') &&
