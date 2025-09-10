@@ -1,0 +1,93 @@
+name: Obfuscate js2
+
+permissions:
+  contents: write
+
+on:
+  workflow_run:
+    workflows:
+      - Auto Patch
+    types:
+      - completed
+  push:
+    paths:
+      - _worker2.js
+  workflow_dispatch:
+
+jobs:
+  obfuscate_and_update_worker:
+    name: Obfuscate js2
+    runs-on: ubuntu-latest
+
+    env:
+      SOURCE_FILE: _worker2.js
+      OUTPUT_FILE: jiami2.js
+
+    steps:
+      # 步骤 1: 检出仓库代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整历史
+
+      # 步骤 2: 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 步骤 3: 安装混淆工具
+      - name: Install obfuscation tool
+        run: |
+          npm install -g javascript-obfuscator
+
+      # 步骤 4: 验证源文件是否存在
+      - name: Verify source file exists
+        run: |
+          if [ ! -f "$SOURCE_FILE" ]; then
+            echo "::error:: 源文件 $SOURCE_FILE 不存在"
+            exit 1
+          fi
+
+      # 步骤 5: 混淆源文件
+      - name: Obfuscate ${{ env.SOURCE_FILE }}
+        run: |
+          OUTPUT_FILE=$(echo "$OUTPUT_FILE" | xargs) # 去除空格
+          javascript-obfuscator "$SOURCE_FILE" --output "$OUTPUT_FILE" \
+          --compact true \
+          --control-flow-flattening false \
+          --dead-code-injection true \
+          --dead-code-injection-threshold 0.5 \
+          --identifier-names-generator mangled \
+          --string-array true \
+          --string-array-encoding 'rc4' \
+          --string-array-threshold 0.75 \
+          --transform-object-keys true \
+          --unicode-escape-sequence false
+
+          if [ ! -f "$OUTPUT_FILE" ]; then
+            echo "::error:: 未生成混淆后的文件 $OUTPUT_FILE"
+            exit 1
+          else
+            echo "已生成混淆后的文件 $OUTPUT_FILE"
+          fi
+
+      # 步骤 6: 提交并安全推送更改
+      - name: Commit and push changes safely
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "$OUTPUT_FILE"
+
+          if git diff --cached --quiet; then
+            echo "没有可提交的更改"
+          else
+            git commit -m "更新 $SOURCE_FILE 的混淆文件"
+
+            # 安全拉取远程最新提交并 rebase
+            git pull --rebase origin main
+
+            # 推送更改
+            git push origin main
+          fi
