@@ -10,7 +10,7 @@ let addressesnotls = [];
 let addressesnotlsapi = [];
 let addressescsv = [];
 let DLS = 8;
-let rename = 'yutian81';
+let rename = 'blog.811520.xyz';
 let countrynum = 4;
 let citynum = 5;
 let remarkIndex = 1;//CSV备注所在列偏移量
@@ -187,8 +187,8 @@ async function 整理测速结果(tls) {
 					const ipAddress = row[0];
 					const port = row[1];
 					const dataCenter = row[tlsIndex + remarkIndex];
-					const country = tlsIndex + countrynum;
-					const city = tlsIndex + citynum;
+					const country = row[tlsIndex + countrynum];
+					const city = row[tlsIndex + citynum];
 					const formattedAddress = `${ipAddress}:${port}#${country} | ${city} | ${rename}`;
 					// const formattedAddress = `${ipAddress}:${port}#${dataCenter}`;
 
